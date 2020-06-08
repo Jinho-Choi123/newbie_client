@@ -1,16 +1,53 @@
 <template>
   <div>
-      <label for="Sports">What Sports do you wanna play?</label>
-      <b-form-input list="input-list" id="Sports"></b-form-input>
-      <b-form-datalist id="Sports" :options="Sports"></b-form-datalist>
+    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+      <label for="input-with-list">Sports:</label>
+      <b-form-input list="input-list" id="input-with-list" v-model="form.sport"></b-form-input>
+      <b-form-datalist id="input-list" :options="Sports"></b-form-datalist>
+
+      <b-form-datepicker v-model="form.date" :min="min" :max="max" locale="kr"></b-form-datepicker>
+
+      <b-button type="submit" variant="primary">Submit</b-button>
+      <b-button type="reset" variant="danger">Reset</b-button>
+    </b-form>
   </div>
 </template>
 
 <script>
 export default {
   data: function () {
+    const now = new Date()
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    const minDate = new Date(today)
+    const maxDate = new Date(today)
+    maxDate.setMonth(maxDate.getMonth() + 2)
     return {
-      Sports: ['baseball', 'basketball', 'soccer', 'tennis']
+      form: {
+        sport: '',
+        date: ''
+      },
+      Sports: ['baseball', 'basketball', 'soccer', 'tennis'],
+      min: minDate,
+      max: maxDate,
+      show: true
+    }
+  },
+  methods: {
+    onSubmit (evt) {
+      console.log('submitevents')
+      evt.preventDefault()
+      alert(JSON.stringify(this.form))
+    },
+    onReset (evt) {
+      evt.preventDefault()
+      // Reset our form values
+      this.form.sport = ''
+      this.form.date = ''
+      // Trick to reset/clear native browser form validation state
+      this.show = false
+      this.$nextTick(() => {
+        this.show = true
+      })
     }
   }
 }
