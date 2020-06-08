@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data: function () {
     const now = new Date()
@@ -34,9 +35,9 @@ export default {
   },
   methods: {
     onSubmit (evt) {
-      console.log('submitevents')
       evt.preventDefault()
-      alert(JSON.stringify(this.form))
+      const data = this.form
+      axios.post('http://localhost:8080/find/data', data)
     },
     onReset (evt) {
       evt.preventDefault()
