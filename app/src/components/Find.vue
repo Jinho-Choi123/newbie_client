@@ -10,11 +10,18 @@
       <b-button type="submit" variant="primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
+    <br><br>
+    <b-list-group v-if="show2">
+      <b-list-group-item v-bind:key="data.id" v-for="data in find_data" >
+        Sports: '{{data.sports}}', Date: {{data.date}}, Place: {{data.place}}, Start Time: {{data.start_time}}, End Time: {{data.end_time}}, Condition: {{data.group_member}}/{{data.group_limit}}, Comment: {{data.comment}}
+      </b-list-group-item>
+    </b-list-group>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+
 export default {
   data: function () {
     const now = new Date()
@@ -30,14 +37,25 @@ export default {
       Sports: ['baseball', 'basketball', 'soccer', 'tennis'],
       min: minDate,
       max: maxDate,
-      show: true
+      show: true,
+      show2: false,
+      find_data: []
     }
   },
   methods: {
     onSubmit (evt) {
+      console.log('entered submit method')
       evt.preventDefault()
       const data = this.form
       axios.post('http://localhost:8080/find/data', data)
+        .then(res => {
+          this.find_data = JSON.parse(res.data)
+          console.log(res.data)
+          this.show2 = true
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
     onReset (evt) {
       evt.preventDefault()
@@ -49,6 +67,7 @@ export default {
       this.$nextTick(() => {
         this.show = true
       })
+      this.show2 = false
     }
   }
 }
