@@ -14,6 +14,7 @@
     <b-list-group v-if="show2">
       <b-list-group-item v-bind:key="data.id" v-for="data in find_data" >
         Sports: '{{data.sports}}', Date: {{data.date}}, Place: {{data.place}}, Start Time: {{data.start_time}}, End Time: {{data.end_time}}, Condition: {{data.group_member}}/{{data.group_limit}}, Comment: {{data.comment}}
+        <b-button type="button" variant = "outline-primary" v-on:click="accompany($event,data.id)">Accompany</b-button>
       </b-list-group-item>
     </b-list-group>
   </div>
@@ -43,19 +44,32 @@ export default {
     }
   },
   methods: {
-    onSubmit (evt) {
+    async onSubmit (evt) {
       console.log('entered submit method')
       evt.preventDefault()
-      const data = this.form
-      axios.post('http://localhost:8080/find/data', data)
+      const data = await JSON.parse(JSON.stringify(this.form))
+      console.log(data)
+      axios.post('http://localhost:8080/findwant/find', data, {
+          headers: {
+          'x-access-token': `${localStorage.getItem('token')}`}
+      })
         .then(res => {
-          this.find_data = JSON.parse(res.data)
+          this.find_data = res.data.data
           console.log(res.data)
           this.show2 = true
         })
-        .catch((err) => {
-          console.log(err)
-        })
+        .catch(function (err) {
+          if (err.response) {
+            console.log(err.response.data)
+            console.log(err.response.status)
+          } else if (err.request) {
+            console.log(err.request)
+          } else {
+            console.log('Error', err.message)
+          }
+          console.log(err.config)
+        }
+        )
     },
     onReset (evt) {
       evt.preventDefault()
@@ -68,6 +82,17 @@ export default {
         this.show = true
       })
       this.show2 = false
+    },
+    accompany (evt, id) {
+      evt.preventDefault()
+      console.log(id)
+      axios.post('http://localhost:8080/findwant/accompany', {id: `${id}`}, {
+          headers: {
+          'x-access-token': `${localStorage.getItem('token')}`}
+      })
+        .then((res) => {
+          alert(res.data.message)
+        })
     }
   }
 }

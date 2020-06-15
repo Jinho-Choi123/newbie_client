@@ -1,14 +1,17 @@
 <template>
   <div>
+    <h1>This is the homepage</h1>
+    <div>{{msg}}</div>
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'welcome to KAISTPORTS'
     }
   }
 }

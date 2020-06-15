@@ -2,8 +2,12 @@
   <div id="app">
     <b-nav>
       <b-nav-item><router-link to='/'>Home</router-link></b-nav-item>
-      <b-nav-item><router-link to='/find'>Find</router-link></b-nav-item>
-      <b-nav-item><router-link to='/want'>Want</router-link></b-nav-item>
+      <b-nav-item><router-link to='/findwant/find'>Find</router-link></b-nav-item>
+      <b-nav-item><router-link to='/findwant/want'>Want</router-link></b-nav-item>
+      <b-nav-item><router-link to='/auth/register'>Register</router-link></b-nav-item>
+      <b-nav-item><router-link to='/auth/login'>Login</router-link></b-nav-item>
+      <b-nav-item><router-link to='/me'>Me</router-link></b-nav-item>
+      <b-nav-item><router-link to='/auth/logout'>Logout</router-link></b-nav-item>
     </b-nav>
     <router-view></router-view>
   </div>

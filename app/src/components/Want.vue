@@ -3,7 +3,7 @@
 
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
       <label for="input-with-list">Sports:</label>
-      <b-form-input required list="input-list" id="input-with-list" v-model="form.sportS"></b-form-input>
+      <b-form-input required list="input-list" id="input-with-list" v-model="form.sports"></b-form-input>
       <b-form-datalist id="input-list" :options="Sports"></b-form-datalist>
 
       <label for="datepicker">Date:</label>
@@ -13,10 +13,6 @@
       <b-input-group class="mb-3">
         <b-form-input required id="start_time_picker" v-model="form.start_time" type="text" placeholder="HH:mm:ss">
         </b-form-input>
-        <b-input-group-append>
-          <b-form-timepicker v-model="value" button-only right show-seconds locale="kr" aria-controls="start_time_picker">
-          </b-form-timepicker>
-        </b-input-group-append>
       </b-input-group>
 
       <label for="end_time_picker">end Time: </label>
@@ -56,11 +52,10 @@ export default {
         sports: '',
         date: '',
         group_limit: '5',
+        place: '',
         comment: '',
         start_time: '',
-        end_time: '',
-        place: '',
-        register_user_id: '23'
+        end_time: ''
       },
       Sports: ['baseball', 'basketball', 'soccer', 'tennis'],
       Places: ['SportsComplex', 'North SchoolYard', 'Main SchoolYard', 'Swimming Pool'],
@@ -68,15 +63,20 @@ export default {
     }
   },
   methods: {
-    onSubmit (evt) {
+    async onSubmit (evt) {
       console.log('entered submit method')
       evt.preventDefault()
-      const data = this.form
-      axios.post('http://localhost:8080/want/data', data)
-        .then(res => {
-          alert('your request has been successfully submitted.')
+      const data = await JSON.parse(JSON.stringify(this.form))
+      axios.post('http://localhost:8080/findwant/want', data, {
+          headers: {
+          'x-access-token': `${localStorage.getItem('token')}`}
+      })
+        .then((res) => {
+          console.log('at thebn')
+          alert(res.data.message)
         })
         .catch((err) => {
+          console.log(this.form)
           alert('Error! Please try it again.')
           console.log(err)
         })
