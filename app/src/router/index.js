@@ -54,7 +54,7 @@ export default new Router({
           })
           .catch((err) => {
             console.log(err)
-            next({name: 'login'})
+            this.$router.push({ name: 'login' })
           })
       }
     },
