@@ -7,6 +7,8 @@ import Register from '../components/Register'
 import Login from '../components/Login'
 import Me from '../components/Me'
 import Logout from '../components/Logout'
+// import axios from 'axios'
+
 import axios from 'axios'
 
 Vue.use(Router)
@@ -22,22 +24,39 @@ export default new Router({
       name: 'find',
       component: Find,
       beforeEnter: (to, from, next) => {
-        axios.getItem('http://localhost:8080/auth/authenticate', {
+        axios.get('http://localhost:8080/auth/authenticate', {
           headers: {
             'x-access-token': `${localStorage.getItem('token')}`
           }
         })
           .then((res) => {
-            if(res.data.success === 'sucess'){
-              next()
-            }
+            console.log('gogogog')
+            next()
           })
-          next({name: 'login'})
+          .catch((err) => {
+            console.log(err)
+            this.$router.push({ name: 'login' })
+          })
       }
     }, {
       path: '/findwant/want',
       name: 'want',
-      component: Want
+      component: Want,
+      beforeEnter: (to, from, next) => {
+        axios.get('http://localhost:8080/auth/authenticate', {
+          headers: {
+            'x-access-token': `${localStorage.getItem('token')}`
+          }
+        })
+          .then((res) => {
+            console.log('gogogog')
+            next()
+          })
+          .catch((err) => {
+            console.log(err)
+            next({name: 'login'})
+          })
+      }
     },
     {
       path: '/auth/register',
@@ -52,12 +71,42 @@ export default new Router({
     {
       path: '/me',
       name: 'Me',
-      component: Me
+      component: Me,
+      beforeEnter: (to, from, next) => {
+        axios.get('http://localhost:8080/auth/authenticate', {
+          headers: {
+            'x-access-token': `${localStorage.getItem('token')}`
+          }
+        })
+          .then((res) => {
+            console.log('gogogog')
+            next()
+          })
+          .catch((err) => {
+            console.log(err)
+            next({name: 'login'})
+          })
+      }
     },
     {
       path: '/auth/logout',
       name: 'Logout',
-      component: Logout
+      component: Logout,
+      beforeEnter: (to, from, next) => {
+        axios.get('http://localhost:8080/auth/authenticate', {
+          headers: {
+            'x-access-token': `${localStorage.getItem('token')}`
+          }
+        })
+          .then((res) => {
+            console.log('gogogog')
+            next()
+          })
+          .catch((err) => {
+            console.log(err)
+            next({name: 'login'})
+          })
+      }
     }
   ]
 })
