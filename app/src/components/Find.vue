@@ -49,7 +49,7 @@ export default {
       evt.preventDefault()
       const data = await JSON.parse(JSON.stringify(this.form))
       console.log(data)
-      axios.post('http://localhost:8080/findwant/find', data, {
+      axios.post('http://ssal.sparcs.org/34514/findwant/find', data, {
           headers: {
           'x-access-token': `${localStorage.getItem('token')}`}
       })

@@ -27,7 +27,7 @@ export default {
     },
     methods: {
         deleting (evt, id) {
-            axios.post('http://localhost:8080/me/delete', {id: `${id}`}, {
+            axios.post('http://ssal.sparcs.org/34514/me/delete', {id: `${id}`}, {
           headers: {
           'x-access-token': `${localStorage.getItem('token')}`}
         }).then((res) => {
@@ -37,7 +37,7 @@ export default {
         }
     },
     created () {
-        axios.get('http://localhost:8080/me/history', {
+        axios.get('http://ssal.sparcs.org/34514/me/history', {
             headers: {
                 'x-access-token': `${localStorage.getItem('token')}`
             }

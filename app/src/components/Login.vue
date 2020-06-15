@@ -38,7 +38,7 @@ export default {
             console.log('in submit method')
             evt.preventDefault()
             const data = await JSON.parse(JSON.stringify(this.form))
-            axios.post('http://localhost:8080/auth/login', data)
+            axios.post('http://ssal.sparcs.org/34514/auth/login', data)
                 .then((res) => {
                     if (res.data.message === 'login failed') {
                         this.msg = res.data.message
