@@ -24,7 +24,7 @@ export default new Router({
       name: 'find',
       component: Find,
       beforeEnter: (to, from, next) => {
-        axios.get('http://ssal.sparcs.org/34514/auth/authenticate', {
+        axios.get('http://localhost:8080/auth/authenticate', {
           headers: {
             'x-access-token': `${localStorage.getItem('token')}`
           }
@@ -43,7 +43,7 @@ export default new Router({
       name: 'want',
       component: Want,
       beforeEnter: (to, from, next) => {
-        axios.get('http://ssal.sparcs.org/34514/auth/authenticate', {
+        axios.get('http://localhost:8080/auth/authenticate', {
           headers: {
             'x-access-token': `${localStorage.getItem('token')}`
           }
@@ -73,7 +73,7 @@ export default new Router({
       name: 'Me',
       component: Me,
       beforeEnter: (to, from, next) => {
-        axios.get('http://ssal.sparcs.org/34514/auth/authenticate', {
+        axios.get('http://localhost:8080/auth/authenticate', {
           headers: {
             'x-access-token': `${localStorage.getItem('token')}`
           }
@@ -93,7 +93,7 @@ export default new Router({
       name: 'Logout',
       component: Logout,
       beforeEnter: (to, from, next) => {
-        axios.get('http://ssal.sparcs.org/34514/auth/authenticate', {
+        axios.get('http://localhost:8080/auth/authenticate', {
           headers: {
             'x-access-token': `${localStorage.getItem('token')}`
           }

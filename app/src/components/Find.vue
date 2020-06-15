@@ -6,7 +6,7 @@
       <b-form-datalist id="input-list" :options="Sports"></b-form-datalist>
 
       <b-form-datepicker v-model="form.date" :min="min" :max="max" locale="kr"></b-form-datepicker>
-
+      <br>
       <b-button type="submit" variant="primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
@@ -49,7 +49,7 @@ export default {
       evt.preventDefault()
       const data = await JSON.parse(JSON.stringify(this.form))
       console.log(data)
-      axios.post('http://ssal.sparcs.org/34514/findwant/find', data, {
+      axios.post('http://localhost:8080/findwant/find', data, {
           headers: {
           'x-access-token': `${localStorage.getItem('token')}`}
       })

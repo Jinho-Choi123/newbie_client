@@ -33,7 +33,7 @@
       <b-form-input id="group_limit" v-model="form.group_limit" placeholder="5" ></b-form-input>
 
       <b-form-textarea id="textarea" v-model="form.comment" placeholder="Comment" rows="3" max-rows="6"></b-form-textarea>
-
+      <br>
       <b-button type="submit" variant="primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
@@ -67,7 +67,7 @@ export default {
       console.log('entered submit method')
       evt.preventDefault()
       const data = await JSON.parse(JSON.stringify(this.form))
-      axios.post('http://ssal.sparcs.org/34514/findwant/want', data, {
+      axios.post('http://localhost:8080/findwant/want', data, {
           headers: {
           'x-access-token': `${localStorage.getItem('token')}`}
       })
